@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://dante123:dante123@devconnector-nztc4.mongodb.net/test?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://dante123:dante123@devconnector-nztc4.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken"
 }

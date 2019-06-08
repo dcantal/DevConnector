@@ -3,6 +3,8 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const User = require('../../models/User');
 
@@ -55,16 +57,28 @@ async (req, res) => {
 
         // Return jsonwebtoken
 
-        res.send('User Registered');
+        const payload = {
+            user: {
+                id: user.id,
+            }
+        };
+
+        jwt.sign(
+            payload, 
+            config.get('jwtSecret'),
+            // 3600 for production
+            { expiresIn: 360000 },
+            (err, token) => {
+                if(err) throw err;
+                res.json({ token });
+            }
+        );
 
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server error');
     }
 
-
-
-    res.send('User route');
 });
 
 module.exports = router;
